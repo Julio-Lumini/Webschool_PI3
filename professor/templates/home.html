@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+    
+    <link rel="stylesheet" href="{% static 'professor/css/professor.css' %}">
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+
+<div class="container">
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-8">
+            
+            <p class="p-bold">Olá, <span class="color-dark">{{request.user.username}}</span></p>
+            <hr> </hr>
+            <br>
+            <p class="p-bold1">Selecione o que deseja fazer:</p>
+
+                        
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{% url 'chamada' %}"><button class="btn btn-success btn-dark-color1" type="button">Lista de Presença</button></a>
+                <button class="btn btn-success btn-dark-color1" type="button" >Atividades</button>
+                <button class="btn btn-success btn-dark-color1" type="button" >Provas</button>
+                <button class="btn btn-success btn-dark-color1" type="button" >Relatorios de Alunos</button>
+            </div>
+            
+            
+        
+            
+            
+
+
+
+        
+
+
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+</div>
+
+{% endblock 'body' %}
+
+

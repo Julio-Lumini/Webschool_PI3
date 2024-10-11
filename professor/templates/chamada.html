@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+
+
+        
+<style>
+            
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+            th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: center;
+                background-color: #f2f2f2;
+            }
+
+            .btn-align-right {
+                display: block;
+                margin: 10px 0;
+                text-align: right;
+            }
+</style>
+
+
+    <link rel="stylesheet" href="{% static 'professor/css/professor.css' %}">
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+
+        
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+
+<div class="container">
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-8">
+
+    <p class="p-bold">Olá, <span class="color-dark">{{request.user.username}}</span></p>
+    <br>
+    <p class="p-bold1">Vamos Realizar a Chamada:</p>
+
+
+        <h5>Turma: {{ professor.turma.turma }} </h5>
+        <p>Data: {{ data_hoje }}</p>
+        <form method="post" action="{% url 'atualizar_presenca' %}">
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>RA</th>
+                        <th>Celular</th>
+                        <th>Nome da Mãe</th>
+                        <th>Status de Presença</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aluno in alunos %}
+                        <tr>
+                            <td>{{ aluno.nome }}</td>
+                            <td>{{ aluno.ra }}</td>
+                            <td>{{ aluno.celular }}</td>
+                            <td>{{ aluno.nome_mae }}</td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitch{{ aluno.id }}" name="presenca_{{ aluno.id }}" {% if aluno.status_presenca == 1 %}checked{% endif %}>
+                                    <label class="form-check-label" for="flexSwitch{{ aluno.id }}">
+                                        {% if aluno.status_presenca == 1 %}Presente{% else %}Ausente{% endif %}
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <div class="btn-align-right">
+            <button type="submit" class="btn btn-success btn-dark-color1">Realizar Chamada</button>
+            </div>
+        </form>
+
+
+            <!-- botao de teste -->
+        <form action="{% url 'gerar_relatorio' %}" method="get">
+            <div class="btn-align-right">
+            <br>
+            <button type="submit" class="btn btn-success btn-dark-color1">Gerar Relatório</button>
+            </div>
+        </form>
+        
+    </ul>
+{% endblock 'body' %}
+

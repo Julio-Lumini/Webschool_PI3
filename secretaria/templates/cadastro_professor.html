@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'secretaria/css/secretaria.css' %}">    
+    <link rel="stylesheet" href="{% static 'professor/css/professor.css' %}">
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+    
+    {% endblock 'head' %}
+
+    {% block 'body' %}
+    {% include "partials/navbar.html" %}
+    
+    <div class="container">
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md-8">
+
+                <p class="p-bold">Olá, <span class="color-dark">{{request.user.username}}</span></p>
+                <p class="p-bold">Vamos realizar o cadastro do Professor</p>
+                {% if messages %}
+                    <br>
+                    {% for message in messages %}
+                        <section class="alert {{message.tags}}">
+                            {{message}}
+                        </section>
+                    {% endfor %}
+                {% endif %}
+                <br>
+                <form action="{% url 'cadastro_professor' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                    
+                        <div class="row">
+                        <div class="col-md">
+                            <label for="">Nome completo:</label>
+                            <input type="text" class="form-control shadow-main-color" name="nome" placeholder="Digite seu nome ...">
+                        </div>
+                        
+                    </div>
+                    <br>
+                    
+                    <label for="">Rua</label>
+                    <input type="text" name="rua" id="" class="form-control shadow-main-color" placeholder="Endereço ...">
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md">
+                            <label for="">Número:</label>
+                            <input type="number" name="numero" id="" class="form-control shadow-main-color">
+    
+                        </div>
+                        <div class="col-md">
+                            <label for="">Bairro:</label>
+                            <input type="text" class="form-control shadow-main-color" name="bairro" placeholder="Bairro ...">
+                        </div>
+
+                        <div class="col-md">
+                            <label for="">CEP</label>
+                            <input type="text" name="cep" id="" class="form-control shadow-main-color">
+    
+                        </div>
+                        
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md">
+                            <label for="">Telefone:</label>
+                            <input type="text" class="form-control shadow-main-color" name="telefone" placeholder="Telefone (xx) xxxx-xxxx">
+                        </div>
+
+                        <div class="col-md">
+                            <label for="">Celular:</label>
+                            <input type="text" class="form-control shadow-main-color" name="celular" placeholder="Celular (xx) xxxx-xxxx">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md">
+                            <label for="">Email:</label>
+                            <input type="email" class="form-control shadow-main-color" name="email" placeholder="email@email.com.br ...">
+                        </div>
+                        
+                    </div>
+                    <br>
+                    <label for="">Foto de perfil:</label>
+                    <input type="file" name="foto" id="" class="form-control shadow-main-color">
+                    <br>
+
+                    <label for="">Turmas</label>
+                    <label for="">Turma</label>
+                            <select name="turma" class="form-select" id="">
+                                <option value="">Selecione uma turma</option>
+                                    {% for i in turma  %}
+                                        <option value="{{i.id}}">{{i.turma}}</option>
+
+                                        
+                                    {% endfor %}
+                            </select>
+                    <br>
+                    <input type="submit" value="Cadastre-se" class="btn btn-success btn-dark-color" >
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    
+    </div>
+    
+    {% endblock 'body' %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'professor/css/professor.css' %}">
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            background-color: #f2f2f2;
+        }
+
+        .btn-align-right {
+            display: block;
+            margin: 10px 0;
+            text-align: right;
+        }
+    </style>
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+    
+    <div class="container">
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md-8">
+    
+        <p class="p-bold">Olá, <span class="color-dark">{{request.user.username}}</span></p>
+        <br>
+
+    <h3>Relatório de Presença</h3>
+    <h4>Professor: {{ professor.nome }}</h4>
+    <h4>Turma: {{ professor.turma }}</h4>
+    <br>
+    <p>Data: {{ data_hoje }}</p>
+    <p>Total de Alunos Presentes: {{ total_presente }}</p>
+    <p>Total de Alunos Ausentes: {{ total_ausente }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>RA</th>
+                <th>Celular</th>
+                <th>Nome da Mãe</th>
+                <th>Status de Presença</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aluno in alunos %}
+                <tr>
+                    <td>{{ aluno.nome }}</td>
+                    <td>{{ aluno.ra }}</td>
+                    <td>{{ aluno.celular }}</td>
+                    <td>{{ aluno.nome_mae }}</td>
+                    <td>{% if aluno.status_presenca == 1 %}Presente{% else %}Ausente{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="btn-align-right">
+    <br>
+    <a href="{% url 'home' %}" class="btn btn-success btn-dark-color1">Voltar a Lista de Presença</a>
+    </div>
+
+    <div class="btn-align-right">
+        
+        <a href="{% url 'relatorios_diarios' %}" class="btn btn-success btn-dark-color1">Enviar Relatorio</a>
+        </div>
+    
+{% endblock 'body' %}

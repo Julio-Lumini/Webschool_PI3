@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'secretaria/css/secretaria.css' %}">    
+    <link rel="stylesheet" href="{% static 'professor/css/professor.css' %}">
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+    
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            background-color: #f2f2f2;
+        }
+
+        .btn-align-right {
+            display: block;
+            margin: 10px 0;
+            text-align: right;
+        }
+    </style>
+    
+    {% endblock 'head' %}
+
+    {% block 'body' %}
+    {% include "partials/navbar.html" %}
+    
+    <div class="container">
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md-8">
+
+                <p class="p-bold"><span class="color-dark"></span></p>
+                <p class="p-bold">Relatórios diários</p>
+                {% if messages %}
+                    <br>
+                    {% for message in messages %}
+                        <section class="alert {{message.tags}}">
+                            {{message}}
+                        </section>
+                    {% endfor %}
+                {% endif %}
+                <br>
+            </div>
+            <form action="{% url 'filtrar_relatorio_diario' %}" method="get">
+                <div class="col-md">
+                    
+                </div>
+                <div class="col-md-4">
+                    <label for="">Departamento</label>
+                    <select name="departamento" class="form-select" id="">
+                        <option value="">Selecione um departamento</option>
+                            {% for i in departamento  %}
+                                <option value="{{i.id}}">{{i.departamento}}</option>
+                                
+                            {% endfor %}
+                    </select>
+                    
+                </div>
+                <div class="col-md">
+                    <label for="">Data:</label>
+                    <input type="date" class="form-control shadow-main-color" name="data" placeholder="Data ...">
+                </div>
+                <div class="col-md">
+                    <br>
+                    <input type="submit" value="Filtrar" class="btn btn-success btn-dark-color" >
+                </div>
+            </div>
+            <div class="col-md">
+                <br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Turma</th>
+                            <th>Período</th>
+                            <th>Alunos Presentes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for hist_chamada in hist_chamada %}
+                            <tr>
+                                <td>{{ hist_chamada.turma }}</td>
+                                <td>{{ hist_chamada.periodo }}</td>
+                                <td>{{ hist_chamada.alunos_presentes }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </form>
+    </div>
+    
+    {% endblock 'body' %}
