@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import dj_database_url
+# import dj_database_url
 from pathlib import Path
 import os
 
@@ -93,24 +93,17 @@ WSGI_APPLICATION = 'Diario.wsgi.application'
         
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': os.getenv('DB_NAME'),
-#         'USER': os.getenv('DB_USER'),
-#         'PASSWORD': os.getenv('DB_PASSWORD'),
-#         'HOST': os.getenv('DB_HOST'),
-#         'PORT': os.getenv('DB_PORT'),
-        
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'default': dj_database_url.config(default = 'mysql://tfsu84rlfuf6lgut:da9vdywygyyapfv7@mkorvuw3sl6cu9ms.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/kuz8u9uqr94e94er')
-        
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'kuz8u9uqr94e94er',
+        'USER': 'tfsu84rlfuf6lgut',
+        'PASSWORD': 'da9vdywygyyapfv7',
+        'HOST': 'mkorvuw3sl6cu9ms.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
