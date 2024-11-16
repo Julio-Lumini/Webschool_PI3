@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'usuarios',
     'professor',
     'secretaria',
+    'administrativo',
+    
 ]
 
 MIDDLEWARE = [

@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from . models import Cadastro_Professor, is_professor, Cadastro_Aluno, Turma
-from django.contrib import messages
+from .models import Cadastro_Professor, Cadastro_Aluno, Turma
 from django.contrib.messages import constants
+from django.contrib import messages  # Importação adicionada
 import pandas as pd
-
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User, Group
 
 
 
@@ -28,6 +28,7 @@ def cadastro_professor(request):
         numero = request.POST.get('numero')
         bairro= request.POST.get('bairro')
         cep = request.POST.get('cep')
+        cidade = request.POST.get('cidade')
         telefone = request.POST.get('telefone')
         celular = request.POST.get('celular')
         email = request.POST.get('email')
@@ -40,6 +41,7 @@ def cadastro_professor(request):
             numero=numero,
             bairro=bairro,
             cep=cep,
+            cidade=cidade,
             telefone=telefone,
             celular=celular,
             email=email,
@@ -66,6 +68,7 @@ def cadastro_aluno(request):
         numero = request.POST.get('numero')
         bairro = request.POST.get('bairro')
         cep = request.POST.get('cep')
+        cidade = request.POST.get('cidade')
         telefone = request.POST.get('telefone')
         celular = request.POST.get('celular')
         email = request.POST.get('email')
@@ -83,6 +86,7 @@ def cadastro_aluno(request):
             numero=numero,
             bairro=bairro,
             cep=cep,
+            cidade=cidade,
             telefone=telefone,
             celular=celular,
             email=email,
@@ -97,9 +101,9 @@ def cadastro_aluno(request):
         
         messages.add_message(request, constants.SUCCESS, "Cadastro Realizado com Sucesso")
         return redirect('/secretaria/cadastro_aluno/')
- 
- 
- 
+
+
+
 def relatorios_secretaria(request):
     if request.method == "GET":
         return render(request, "relatorios_secretaria.html")
@@ -128,5 +132,64 @@ def filtrar_relatorio_diario(request):
     # except HistoricoChamada.DoesNotExist:
     #     messages.add_message(request, constants.ERROR, 'Não há histórico de chamadas')
     #     return redirect('/secretaria/relatorios_diarios/')
-    
    
+@ login_required
+def listar_professores(request):
+    # # Permitir acesso apenas para membros da secretaria
+    if not request.user.groups.filter(name='Secretaria').exists():
+        messages.error(request, "Você não tem permissão para acessar esta página.")
+        return redirect('/')
+
+    professores = Cadastro_Professor.objects.all()
+    return render(request, 'listar_professores.html', {'professores': professores}) 
+
+
+login_required
+def editar_professor(request, professor_id):
+    # Permitir acesso apenas para membros da secretaria
+    if not request.user.groups.filter(name='Secretaria').exists():
+        messages.error(request, "Você não tem permissão para acessar esta página.")
+        return redirect('/')
+
+    professor = get_object_or_404(Cadastro_Professor, id=professor_id)
+    turmas = Turma.objects.all()
+
+    if request.method == 'GET':
+        # Renderizar o formulário com os dados do professor e as turmas
+        return render(request, 'cadastro_professor.html', {
+            'professor': professor,
+            'turmas': turmas,
+        })
+
+    elif request.method == 'POST':
+        # Atualizar os dados do professor
+        professor.nome = request.POST.get('nome')
+        professor.rua = request.POST.get('rua')
+        professor.numero = request.POST.get('numero')
+        professor.bairro = request.POST.get('bairro')
+        professor.cep = request.POST.get('cep')
+        professor.cidade = request.POST.get('cidade')
+        professor.telefone = request.POST.get('telefone')
+        professor.celular = request.POST.get('celular')
+        professor.email = request.POST.get('email')
+        professor.turma_id = request.POST.get('turma')  # Certifique-se de que 'turma' é o name correto no HTML.
+
+        try:
+            professor.save()
+            messages.success(request, "Dados do professor atualizados com sucesso!")
+            return redirect('listar_professores')  # Redirecionar após o salvamento.
+        except Exception as e:
+            messages.error(request, f"Erro ao salvar os dados: {e}")
+        
+        # Caso haja erro ao salvar, re-renderize o formulário com os dados preenchidos
+        return render(request, 'cadastro_professor.html', {
+            'professor': professor,
+            'turmas': turmas,
+        })
+
+
+def is_professor(user):
+    """
+    Verifica se o usuário pertence ao grupo 'Professor'.
+    """
+    return user.groups.filter(name='Professor').exists()

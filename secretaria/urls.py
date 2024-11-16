@@ -8,4 +8,6 @@ urlpatterns = [
     path('relatorios_secretaria/', views.relatorios_secretaria, name='relatorios_secretaria'),
     path('relatorios_diarios/', views.relatorios_diarios, name='relatorios_diarios'),
     path('filtrar_relatorio_diario/', views.filtrar_relatorio_diario, name='filtrar_relatorio_diario'),
+    path('listar_professores/', views.listar_professores, name='listar_professores'),
+    path('editar_professor/<int:professor_id>/', views.editar_professor, name='editar_professor'),
 ]

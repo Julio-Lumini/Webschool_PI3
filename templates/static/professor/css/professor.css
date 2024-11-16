@@ -17,7 +17,7 @@
 
 
 .btn-dark-color1{ /* Botões da home*/
-    background-color:#14c0c0;
+    background-color:var(--main-color);
     color: white;
     margin:8px;
     padding: 3%;
@@ -30,7 +30,7 @@
     
 }
 .d-grid .btn {
-    background-color: #00CCBE;
+    background-color: var(--main-color);
 }
 
 .d-grid .btn:hover {
@@ -51,7 +51,7 @@
 
 .btn-dark-color-outline:hover{
 
-    background-color: #09A6A3;
+    background-color: var(--main-color);
     color: white;
     /*border: 1px solid var(--dark-color);*/
 }

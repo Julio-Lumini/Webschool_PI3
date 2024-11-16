@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Merenda</title>
+    <style>
+        .grafico img {
+            max-width: 100%;
+            height: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Análise de Merenda</h1>
+
+    {% if mensagem %}
+        <p>{{ mensagem }}</p>
+    {% else %}
+        <div class="grafico">
+            <h2>Gráfico de Quantidade por Item</h2>
+            <img src="data:image/png;base64,{{ grafico }}" alt="Gráfico">
+        </div>
+
+        <div class="tabela">
+            <h2>Dados Analisados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Quantidade</th>
+                        <th>Data de Entrada</th>
+                        <th>Consumo Estimado</th>
+                        <th>Estoque Previsto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in dados_tabela %}
+                        <tr>
+                            <td>{{ item.nome }}</td>
+                            <td>{{ item.quantidade }}</td>
+                            <td>{{ item.data_entrada }}</td>
+                            <td>{{ item.consumo_estimado }}</td>
+                            <td>{{ item.estoque_previsto }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</body>
+</html>

@@ -1,7 +1,7 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-color-dark">
     <div class="container-fluid">
-    <a class="navbar-brand" href="#"><img src="{% static 'geral/img/logo.png' %}" width="4%" alt="">&nbsp Creche Eliza Rossi Lima</a>
+    <a class="navbar-brand" href="#"><img src="{% static 'geral/img/logo creche.png' %}" width="4%" alt="">&nbsp Creche Municipal Eliza Rossi Lima</a>
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,25 +9,32 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
+
+            {% if is_secretaria %}
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Area da Secretaria
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="{% url 'home_secretaria' %}">Home</a></li>
-                <li><a class="dropdown-item" href="{% url 'cadastro_professor' %}">Cadastro de Professor</a></li>
-                <li><a class="dropdown-item" href="{% url 'cadastro_aluno' %}">Cadastro de Aluno</a></li>
-                <li><a class="dropdown-item" href="{% url 'relatorios_diarios' %}">Relatorios Diarios</a></li>
-            </li>
+                    <li><a class="dropdown-item" href="{% url 'home_secretaria' %}">Home</a></li>
+                    <li><a class="dropdown-item" href="{% url 'cadastro_professor' %}">Cadastro de Professor</a></li>
+                    <li><a class="dropdown-item" href="{% url 'cadastro_aluno' %}">Cadastro de Aluno</a></li>
+                    <li><a class="dropdown-item" href="{% url 'relatorios_diarios' %}">Relatorios Diarios</a></li>
+                    <li><a class="dropdown-item" href="{% url 'relatorios_alunos' %}">Relatorios de Alunos</a></li>
+                    <li><a class="dropdown-item" href="{% url 'documentação' %}">Documentação</a></li>
                 </ul>
+            </li>
+            {% endif %}
+
         {% if is_professor %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Area do Professor
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
-                <li><a class="dropdown-item" href="{% url 'chamada' %}">Lista de Frequencia</a></li>
+                    <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
+                    <li><a class="dropdown-item" href="{% url 'chamada' %}">Lista de Frequencia</a></li>
                 </ul>
             </li>
         {% else %}
@@ -37,11 +44,9 @@
             {% endif %}
                 
 
-                
-
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Sair</a>
-                </li>     
+                </li>
             </ul>
 
     </div>

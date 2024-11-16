@@ -29,40 +29,50 @@
                     {% endfor %}
                 {% endif %}
                 <br>
-                <form action="{% url 'cadastro_professor' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <form action="{% url 'editar_professor' professor.id %}" enctype='multipart/form-data'>{% csrf_token %}
                     
                         <div class="row">
                         <div class="col-md">
                             <label for="">Nome completo:</label>
-                            <input type="text" class="form-control shadow-main-color" name="nome" placeholder="Digite seu nome ...">
+                            <input type="text" class="form-control shadow-main-color" name="nome" value="{{ professor.nome }}" placeholder="Digite seu nome ...">
                         </div>
                         
                     </div>
-                    <br>
-                    
-                    <label for="">Rua</label>
-                    <input type="text" name="rua" id="" class="form-control shadow-main-color" placeholder="Endereço ...">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="cep">Cep</label>
+                            <input type="text" name="cep" id="cep" class="form-control shadow-main-color" placeholder="CEP">
+                        </div>
+                    </div>
                     <br>
 
                     <div class="row">
-                        <div class="col-md">
-                            <label for="">Número:</label>
-                            <input type="number" name="numero" id="" class="form-control shadow-main-color">
-    
+                        <div class="col-md"> 
+                            <label for="endereço">Endereço</label>
+                            <input type="text" name="rua" id="rua" class="form-control shadow-main-color" placeholder="Endereço ...">
                         </div>
+                    </div>    
+                        <br>                                                
+
+                    <div class="row">
                         <div class="col-md">
-                            <label for="">Bairro:</label>
-                            <input type="text" class="form-control shadow-main-color" name="bairro" placeholder="Bairro ...">
+                            <label for="numero">Número:</label>
+                            <input type="text" name="numero" id="numero" class="form-control shadow-main-color">
                         </div>
 
                         <div class="col-md">
-                            <label for="">CEP</label>
-                            <input type="text" name="cep" id="" class="form-control shadow-main-color">
-    
+                            <label for="">Bairro:</label>
+                            <input type="text" class="form-control shadow-main-color" name="bairro" id="bairro" placeholder="Bairro ...">
                         </div>
-                        
-                    </div>
+
+                        <<div class="col-md-6">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" class="form-control shadow-main-color" name="cidade" id="cidade" placeholder="Cidade ...">
+                        </div>
+                    </div>                        
+                    
                     <br>
+
                     <div class="row">
                         <div class="col-md">
                             <label for="">Telefone:</label>
@@ -78,7 +88,7 @@
                     <div class="row">
                         <div class="col-md">
                             <label for="">Email:</label>
-                            <input type="email" class="form-control shadow-main-color" name="email" placeholder="email@email.com.br ...">
+                            <input type="email" class="form-control shadow-main-color" name="email" value="{{ professor.email }}" placeholder="email@email.com.br ...">
                         </div>
                         
                     </div>
@@ -88,17 +98,19 @@
                     <br>
 
                     <label for="">Turmas</label>
-                    <label for="">Turma</label>
-                            <select name="turma" class="form-select" id="">
-                                <option value="">Selecione uma turma</option>
-                                    {% for i in turma  %}
-                                        <option value="{{i.id}}">{{i.turma}}</option>
-
-                                        
-                                    {% endfor %}
-                            </select>
+                    <label for="turma">Turma:</label>
+                    <select name="turma" class="form-select">
+                        <option value="">Selecione uma turma</option>
+                        {% for Turma in Turmas %}
+                            <option value="{{ turma.id }}" {% if turma.id == professor.turma_id %}selected{% endif %}>
+                                {{ turma.nome }}
+                            </option>
+                        {% endfor %}
+                    </select>
                     <br>
-                    <input type="submit" value="Cadastre-se" class="btn btn-success btn-dark-color" >
+                    <input type="submit" value="Salvar Alterações" class="btn btn-success btn-dark-color" >
+                    <
+    </form>
                 </form>
             </div>
             <div class="col-md-4"></div>
@@ -106,4 +118,37 @@
     
     </div>
     
+
+    <script>
+        document.getElementById("cep").addEventListener("blur", function() {
+            var cep = this.value.replace(/\D/g, '');
+        
+            if (cep) {
+                // Expressão regular para validar o CEP
+                var validacep = /^[0-9]{8}$/;
+                if (validacep.test(cep)) {
+                    // Faz a requisição para a API ViaCEP
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.erro) {
+                                // Preenche os campos de endereço com os dados da API
+                                document.getElementById('rua').value = data.logradouro;
+                                document.getElementById('bairro').value = data.bairro;
+                                document.getElementById('cidade').value = data.localidade;
+                                // Adicione aqui outros campos se precisar (ex: cidade, estado)
+                            } else {
+                                alert("CEP não encontrado.");
+                            }
+                        })
+                        .catch(error => console.log('Erro na requisição:', error));
+                } else {
+                    alert("Formato de CEP inválido.");
+                }
+            }
+        });
+        </script>
+
+
+
     {% endblock 'body' %}

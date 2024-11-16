@@ -51,46 +51,47 @@
                         </div>
                     </div>
                     <br>
-
                     <div class="row">
-                        <div class="col-md-10">
-                            <label for="">Rua:</label>
-                            <input type="text" class="form-control shadow-main-color" name="rua" placeholder="Endereço ...">
-    
+                        <div class="col-md-6">
+                            <label for="cep">Cep</label>
+                            <input type="text" name="cep" id="cep" class="form-control shadow-main-color" placeholder="CEP">
                         </div>
-                        
-                        <div class="col-md">
-                            <label for="">Numero</label>
-                            <input type="number" name="numero" id="" class="form-control shadow-main-color">
-    
+                        <div class="col-md-6">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" class="form-control shadow-main-color" name="cidade" id="cidade" placeholder="Cidade ...">
                         </div>
                     </div>
                     <br>
-
+                    <div class="row">
+                        <div class="col-md-10">
+                            <label for="">Endereço:</label>
+                            <input type="text" class="form-control shadow-main-color" name="rua" id="rua" placeholder="Endereço ...">
+                            </div>
+                        
+                        <div class="col-md">
+                            <label for="">Numero</label>
+                            <input type="text" name="numero" id="numero" class="form-control shadow-main-color">
+                            </div>
+                    </div>
+                    <br>
                     <div class="row">
                         
                         <div class="col-md">
                             <label for="">Bairro:</label>
-                            <input type="text" class="form-control shadow-main-color" name="bairro" placeholder="Bairro ...">
+                            <input type="text" class="form-control shadow-main-color" name="bairro" id="bairro" placeholder="Bairro ...">
                         </div>
-
-                        <div class="col-md">
-                            <label for="">CEP</label>
-                            <input type="text" name="cep" id="" class="form-control shadow-main-color">
-    
-                        </div>
+                        
                         
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-md">
                             <label for="">Telefone:</label>
-                            <input type="text" class="form-control shadow-main-color" name="telefone" placeholder="Telefone (xx) xxxx-xxxx">
+                            <input type="tel" class="form-control shadow-main-color" name="telefone" placeholder="Telefone (xx) xxxx-xxxx">
                         </div>
-
                         <div class="col-md">
                             <label for="">Celular:</label>
-                            <input type="text" class="form-control shadow-main-color" name="celular" placeholder="Celular (xx) xxxx-xxxx">
+                            <input type="tel" class="form-control shadow-main-color" name="celular" placeholder="Celular (xx) xxxx-xxxx">
                         </div>
                     </div>
                     <br>
@@ -151,5 +152,38 @@
         </div>
     
     </div>
+
+
+
+    <script>
+        document.getElementById("cep").addEventListener("blur", function() {
+            var cep = this.value.replace(/\D/g, '');
+        
+            if (cep) {
+                // Expressão regular para validar o CEP
+                var validacep = /^[0-9]{8}$/;
+                if (validacep.test(cep)) {
+                    // Faz a requisição para a API ViaCEP
+                    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.erro) {
+                                // Preenche os campos de endereço com os dados da API
+                                document.getElementById('rua').value = data.logradouro;
+                                document.getElementById('bairro').value = data.bairro;
+                                document.getElementById('cidade').value = data.localidade;
+                                // Adicione aqui outros campos se precisar (ex: cidade, estado)
+                            } else {
+                                alert("CEP não encontrado.");
+                            }
+                        })
+                        .catch(error => console.log('Erro na requisição:', error));
+                } else {
+                    alert("Formato de CEP inválido.");
+                }
+            }
+        });
+        </script>
+
     
     {% endblock 'body' %}

@@ -1,7 +1,7 @@
 :root{   
-    --main-color: #00CCBE;
-    --dark-color: #09A6A3;
-    --contrast-color: #FFD686;
+    --main-color: #7BC8D9;
+    --dark-color: #2c72aa;
+    --contrast-color: #044C85;
 
 }
 
@@ -21,9 +21,14 @@
     color: var(--dark-color);
 }
 
-.logo {
+.logo  {
     height: 10vh;
     width: auto;
     object-fit:scale-down;
 }
 
+.acess{
+    height: 5vh;
+    width: auto;
+    object-fit:scale-down;
+}

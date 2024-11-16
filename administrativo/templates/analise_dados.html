@@ -1,0 +1,33 @@
+<form method="POST" action="{% url 'analise_dados' %}">
+    {% csrf_token %}
+    <label for="periodo_inicio">Data Inicial:</label>
+    <input type="date" name="periodo_inicio" id="periodo_inicio">
+    <label for="periodo_fim">Data Final:</label>
+    <input type="date" name="periodo_fim" id="periodo_fim">
+    <label for="nome_item">Nome do Item:</label>
+    <input type="text" name="nome_item" id="nome_item">
+    <button type="submit">Filtrar</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Data de Entrada</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data %}
+        <tr>
+            <td>{{ item.nome }}</td>
+            <td>{{ item.quantidade }}</td>
+            <td>{{ item.data_entrada }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'exportar_grafico' %}">
+    <button>Baixar Gráfico</button>
+</a>

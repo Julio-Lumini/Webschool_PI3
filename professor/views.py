@@ -56,3 +56,4 @@ def gerar_relatorio(request):
     except Cadastro_Professor.DoesNotExist:
         messages.add_message(request, constants.ERROR, 'Você não é um Professor Cadastrado')
         return redirect('/usuarios/login')
+    

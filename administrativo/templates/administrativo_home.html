@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'secretaria/css/secretaria.css' %}">    
+    <link rel="stylesheet" href="{% static 'professor/css/professor.css' %}">
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+    <link rel="stylesheet" href="{% static 'administrativo/css/administrativo.css' %}">
+    
+    {% endblock 'head' %}
+
+    {% block 'body' %}
+    {% include "partials/navbar.html" %}
+
+    <div class="container">
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-8">
+            
+            <p class="p-bold">Olá, <span class="color-dark">{{request.user.username}}</span></p>
+            <hr> 
+            <br>
+            <p class="p-bold1">Selecione o que deseja fazer:</p>
+
+
+    <h2>Página Administrativa</h2>
+    <br>
+
+    <div class="d-grid gap-2 d-md-block">
+        <a href="{% url 'cadastro_materiais' %}"><button class="btn btn-success btn-dark-color1" type="button">Cadastro de Materiais</button></a>
+        <a href="{% url 'controle_merenda' %}"><button class="btn btn-success btn-dark-color1" type="button" >Controle de Merenda</button></a>
+        <button class="btn btn-success btn-dark-color1" type="button" >Relatorios de Materiais</button>
+        <button class="btn btn-success btn-dark-color1" type="button" >Relatorios de Merenda</button>
+        <button class="btn btn-success btn-dark-color1" type="button" >Ocorrencias</button>
+        <button class="btn btn-success btn-dark-color1" type="button" >Solicitações de Compras</button>
+        <a href="{% url 'analise_merenda' %}"><button class="btn btn-success btn-dark-color1" type="button">Analisar Dados Merenda</button></a>
+    </div>
+
+
+{% endblock 'body' %}

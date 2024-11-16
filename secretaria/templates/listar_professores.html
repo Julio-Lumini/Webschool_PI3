@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'secretaria/css/secretaria.css' %}">    
+    <link rel="stylesheet" href="{% static 'professor/css/professor.css' %}">
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+    
+    {% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+
+<br>
+<br>
+
+<div class="container">
+    <h2>Professores Cadastrados</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for professor in professores %}
+                <tr>
+                    <td>{{ professor.user.username }}</td>
+                    <td>{{ professor.user.email }}</td>
+                    <td>
+                        <a href="{% url 'editar_professor' professor.id %}" class="btn btn-primary">Editar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

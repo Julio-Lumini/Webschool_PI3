@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 
 
 
@@ -19,14 +19,15 @@ class Cadastro_Professor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)  # Associa o professor a um usuário
     nome = models.CharField(max_length=200)
     rua = models.CharField( max_length=50)
-    numero = models.IntegerField( )
+    numero = models.IntegerField(null=True, blank=True)
     bairro = models.CharField( max_length=50)
     cep = models.CharField(max_length=15 )
+    cidade = models.CharField(max_length=50)
     telefone = models.CharField( max_length=50)
     celular = models.CharField(max_length=50 )
     email = models.EmailField( max_length=254)
     foto = models.ImageField( upload_to= "perfil_professor")
-    turma = models.ForeignKey(Turma, on_delete=models.CASCADE, related_name='professor')
+    turma = models.ForeignKey(Turma, on_delete=models.SET_NULL, null=True, blank=True)
     #user= models.ForeignKey(User, on_delete=models.DO_NOTHING)
     
     def __str__(self):
@@ -38,9 +39,10 @@ class Cadastro_Aluno(models.Model):
     nome_mae = models.CharField(max_length=200)
     nome_pai = models.CharField(max_length=200)
     rua = models.CharField( max_length=50)
-    numero = models.IntegerField( )
+    numero = models.IntegerField(null=True, blank=True)
     bairro = models.CharField(max_length=50)
     cep = models.CharField(max_length=15 )
+    cidade = models.CharField (max_length=50)
     telefone = models.CharField(max_length=50)
     celular = models.CharField(max_length=50 )
     email = models.EmailField(max_length=254)

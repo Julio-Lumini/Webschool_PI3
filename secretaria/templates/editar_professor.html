@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block 'body' %}
+<div class="container">
+    <h2>Editar Professor</h2>
+    <form method="POST" action="{% url 'editar_professor' professor.id %}">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="numero" class="form-label">Número:</label>
+            <input type="text" name="numero" id="numero" class="form-control" value="{{ professor.numero }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="rua" class="form-label">Rua:</label>
+            <input type="text" name="rua" id="rua" class="form-control" value="{{ professor.rua }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="bairro" class="form-label">Bairro:</label>
+            <input type="text" name="bairro" id="bairro" class="form-control" value="{{ professor.bairro }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="cidade" class="form-label">Cidade:</label>
+            <input type="text" name="cidade" id="cidade" class="form-control" value="{{ professor.cidade }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="telefone" class="form-label">Telefone:</label>
+            <input type="text" name="telefone" id="telefone" class="form-control" value="{{ professor.telefone }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="celular" class="form-label">Celular:</label>
+            <input type="text" name="celular" id="celular" class="form-control" value="{{ professor.celular }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="turma" class="form-label">Turma:</label>
+            <select name="turma" id="turma" class="form-select">
+                <option value="">Selecione uma turma</option>
+                {% for turma in turmas %}
+                    <option value="{{ turma.id }}" {% if turma.id = professor.turma_id %}selected{% endif %}>{{ turma.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="{% url 'listar_professores' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

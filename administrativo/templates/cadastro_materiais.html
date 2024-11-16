@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'secretaria/css/secretaria.css' %}">    
+    <link rel="stylesheet" href="{% static 'professor/css/professor.css' %}">
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+    
+    {% endblock 'head' %}
+
+    {% block 'body' %}
+    {% include "partials/navbar.html" %}
+
+    <h1>Cadastro de Materiais</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+    <a href="{% url 'administrativo_home' %}">Voltar</a>
+
+    
+
+{% endblock 'body' %}

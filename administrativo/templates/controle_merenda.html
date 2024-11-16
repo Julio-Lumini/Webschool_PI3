@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'secretaria/css/secretaria.css' %}">    
+    <link rel="stylesheet" href="{% static 'professor/css/professor.css' %}">
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+    
+    {% endblock 'head' %}
+
+    {% block 'body' %}
+    {% include "partials/navbar.html" %}
+
+    <h1>Controle de Merenda</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+    <br>
+
+    
+    <a href="{% url 'administrativo_home' %}">Voltar</a>
+   
+
+    <form method="get" action="{% url 'importar_merenda' %}">
+        <button type="submit" class="btn btn-success">Importar merenda</button>
+    </form>
+    <br>
+
+    <form method="get" action="{% url 'exportar_merenda' %}">
+        <button type="submit" class="btn btn-success">Exportar Relatório</button>
+    </form>
+    
+    
+
+
+{% endblock 'body' %}
