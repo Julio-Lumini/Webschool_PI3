@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 import io
 import base64
+import numpy as np
 
 
 # Create your views here.

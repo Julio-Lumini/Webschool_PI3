@@ -10,8 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
 
-            {% if is_secretaria %}
-
+        {% if is_secretaria %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Area da Secretaria
@@ -25,7 +24,7 @@
                     <li><a class="dropdown-item" href="{% url 'documentação' %}">Documentação</a></li>
                 </ul>
             </li>
-            {% endif %}
+        <{% endif %}
 
         {% if is_professor %}
             <li class="nav-item dropdown">
@@ -41,7 +40,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'cadastro_professor' %}">Sou Professor</a>
             </li>
-            {% endif %}
+        {% endif %} 
                 
 
                 <li class="nav-item">
