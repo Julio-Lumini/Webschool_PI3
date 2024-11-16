@@ -81,14 +81,25 @@ WSGI_APPLICATION = 'Diario.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 #'NAME': BASE_DIR / 'db.sqlite3',
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'Chamada',
+#         'USER':'root',
+#         'PASSWORD': 'dev24',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+        
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Chamada',
-        'USER':'root',
-        'PASSWORD': 'dev24',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
         
     }
 }
