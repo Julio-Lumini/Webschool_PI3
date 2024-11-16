@@ -1,1 +1,1 @@
-web: gunicorn Diario.wsgi.application:app
+web: Diario.wsgi:application
