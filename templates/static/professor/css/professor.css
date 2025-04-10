@@ -10,8 +10,6 @@
     margin-left: 8px;
     font-weight: bold;
     font-size:1.4rem;
-    
-    
 }
 
 
@@ -25,10 +23,8 @@
     width: 15vh;
     border-radius: 13px;
     border-color: white;
-
-
-    
 }
+
 .d-grid .btn {
     background-color: var(--main-color);
 }

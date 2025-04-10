@@ -29,7 +29,8 @@
                     {% endfor %}
                 {% endif %}
                 <br>
-                <form action="{% url 'editar_professor' professor.id %}" enctype='multipart/form-data'>{% csrf_token %}
+                <form action="{% url 'cadastro_professor' %}" 
+                method="POST" enctype='multipart/form-data'>{% csrf_token %}
                     
                         <div class="row">
                         <div class="col-md">
@@ -98,20 +99,17 @@
                     <br>
 
                     <label for="">Turmas</label>
-                    <label for="turma">Turma:</label>
-                    <select name="turma" class="form-select">
+                    <label for="">Turma:</label>
+                    <select name="turma" class="form-select" id="">
                         <option value="">Selecione uma turma</option>
-                        {% for Turma in Turmas %}
-                            <option value="{{ turma.id }}" {% if turma.id == professor.turma_id %}selected{% endif %}>
-                                {{ turma.nome }}
-                            </option>
+                        {% for i in turma %}
+                            <option value="{{ i.id }}">    {{i.turma}}</option>
+
                         {% endfor %}
                     </select>
                     <br>
                     <input type="submit" value="Salvar Alterações" class="btn btn-success btn-dark-color" >
-                    <
-    </form>
-                </form>
+                  </form>
             </div>
             <div class="col-md-4"></div>
         </div>

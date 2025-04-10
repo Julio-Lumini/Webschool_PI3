@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from secretaria.models import Cadastro_Aluno
 
 # Create your models here.

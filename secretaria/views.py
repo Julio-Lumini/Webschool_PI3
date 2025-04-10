@@ -7,17 +7,17 @@ import pandas as pd
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 
-
-
 # Create your views here.
 def home_secretaria(request):
     if request.method == "GET":
         return render(request, "home_secretaria.html" )
     
 def cadastro_professor(request):    
+   
     if is_professor(request.user):
         messages.add_message(request, constants.WARNING, "Você já está cadastrado como Professor")
         return redirect('/professor/home')
+    
     
     if request.method == "GET":
         turma = Turma.objects.all()
@@ -48,9 +48,8 @@ def cadastro_professor(request):
             foto=foto,
             turma_id=turma,
             user=request.user,
-            
-            
         )
+        
         cadastro_professor.save()
         
         messages.add_message(request, constants.SUCCESS, "Cadastro Realizado com Sucesso")
@@ -97,8 +96,7 @@ def cadastro_aluno(request):
             periodo=periodo,
         )
         
-        cadastro_aluno.save()
-        
+        cadastro_aluno.save()        
         messages.add_message(request, constants.SUCCESS, "Cadastro Realizado com Sucesso")
         return redirect('/secretaria/cadastro_aluno/')
 
@@ -144,7 +142,7 @@ def listar_professores(request):
     return render(request, 'listar_professores.html', {'professores': professores}) 
 
 
-login_required
+@login_required
 def editar_professor(request, professor_id):
     # Permitir acesso apenas para membros da secretaria
     if not request.user.groups.filter(name='Secretaria').exists():
@@ -172,7 +170,7 @@ def editar_professor(request, professor_id):
         professor.telefone = request.POST.get('telefone')
         professor.celular = request.POST.get('celular')
         professor.email = request.POST.get('email')
-        professor.turma_id = request.POST.get('turma')  # Certifique-se de que 'turma' é o name correto no HTML.
+        professor.turma = request.POST.get('turma')  # Certifique-se de que 'turma' é o name correto no HTML.
 
         try:
             professor.save()

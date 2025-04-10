@@ -1,14 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.messages import constants
 from django.contrib import messages, auth
 from django.db import transaction
-from secretaria.models import Cadastro_Professor, Turma
-from django.contrib.auth.decorators import login_required
+from secretaria.models import Cadastro_Professor
 
 
-# Create your views here.
 def cadastro(request):
     if request.method == "GET":
         return render(request, 'cadastro.html')
@@ -17,7 +14,10 @@ def cadastro(request):
         email = request.POST.get('email')
         senha = request.POST.get('senha')
         confirmar_senha = request.POST.get('confirmar_senha')
-        perfil = request.POST.get('perfil')  # Novo campo
+        perfil = request.POST.get('perfil')
+        if not perfil or perfil not in ["professor", "secretaria"]:
+            messages.add_message(request, constants.ERROR, 'Perfil inválido ou obrigatório')
+            return redirect('/usuarios/cadastro')
         
         
         if senha != confirmar_senha:
@@ -25,33 +25,31 @@ def cadastro(request):
             return redirect('/usuarios/cadastro')
         
         if len(senha) < 6:
-            messages.add_message(request, constants.ERROR, 'A Senha precisa conter 8 digitos')
+            messages.add_message(request, constants.ERROR, 'A Senha precisa conter pelo menos 6 caracteres')
             return redirect('/usuarios/cadastro')
         
         users = User.objects.filter(username=username)
         print(users.exists())
         
         if users.exists():
-            messages.add_message(request, constants.ERROR, 'Usuario já cadastrado comm esse nome')
+            messages.add_message(request, constants.ERROR, 'Usuario já cadastrado com esse nome')
             return redirect('/usuarios/cadastro')
         
-        
         with transaction.atomic():
-            user= User.objects.create_user(
-            username=username,
-            email=email,
-            password=senha
-        )
-            
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=senha
+            )
         # Relacione o perfil ao usuário
             if perfil == "professor":
-                Cadastro_Professor.objects.create(user=user,)
+                if hasattr(Cadastro_Professor, 'user'):
+                    Cadastro_Professor.objects.create(user=user)
+                else:
+                    messages.add_message(request, constants.ERROR, 'Erro ao associar perfil de professor')
+                    return redirect('/usuarios/cadastro')
             # Membro da secretaria não precisa de model adicional
-            
-        return redirect('/usuarios/login')
-    
-    
-    
+            return redirect('/usuarios/login')
     
 def login_view(request):
     if request.method == 'GET':
@@ -80,8 +78,6 @@ def login_view(request):
 def sair(request):
     auth.logout(request)
     return redirect('/usuarios/login')
-
-
 
 
 

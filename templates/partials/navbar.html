@@ -9,46 +9,20 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-
             {% if is_secretaria %}
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Area da Secretaria
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="{% url 'home_secretaria' %}">Home</a></li>
-                    <li><a class="dropdown-item" href="{% url 'cadastro_professor' %}">Cadastro de Professor</a></li>
-                    <li><a class="dropdown-item" href="{% url 'cadastro_aluno' %}">Cadastro de Aluno</a></li>
-                    <li><a class="dropdown-item" href="{% url 'relatorios_diarios' %}">Relatorios Diarios</a></li>
-                    <li><a class="dropdown-item" href="{% url 'relatorios_alunos' %}">Relatorios de Alunos</a></li>
-                    <li><a class="dropdown-item" href="{% url 'documentação' %}">Documentação</a></li>
-                </ul>
-            </li>
-            {% endif %}
-
-        {% if is_professor %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Area do Professor
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
-                    <li><a class="dropdown-item" href="{% url 'chamada' %}">Lista de Frequencia</a></li>
-                </ul>
-            </li>
-        {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'cadastro_professor' %}">Sou Professor</a>
-            </li>
-            {% endif %}
-                
-
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Sair</a>
+                    <a class="nav-link" href="{% url 'home_secretaria' %}">Home Secretaria</a>
                 </li>
-            </ul>
-
+            {% elif is_professor %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+            {% endif %}
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Sair</a>
+            </li>
+        </ul>
     </div>
-    </div>
+</div>
 </nav>
