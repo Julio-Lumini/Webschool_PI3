@@ -13,26 +13,12 @@
     margin-left: 8px;
     font-weight: bold;
     font-size:1.4rem;
-    
-    
 }
 
-.btn-dark-color1{ /* Botões da home*/
-    background-color:var(--main-color);
-    color: white;
-    margin:8px;
-    padding: 3%;
-    height: 10vh;
-    width: 15vh;
-    border-radius: 13px;
-    border-color: white;    
-}
+
 
 .d-grid .btn {
     background-color: var(--main-color);
-    
-
-    
 }
 
 .d-grid .btn:hover {
@@ -40,21 +26,19 @@
     border-color: white;
 }
 
-.btn.btn-success.btn-dark-color1 {
+.btn.btn-success.btn-dark-color2 {
     box-shadow: 10px 10px;
 }
-
-
-/*.btn-dark-color-outline {
-
-    border: 1px solid var(--dark-color);
-    background-color: var(--dark-color);
-
+.btn-dark-color2{ 
+    background-color:var(--main-color);
+    color: white;
+    margin:5px;
+    padding: 2%;
+    height: 10vh;
+    width: 15vh;
+    border-radius: 13px;
+    border-color: white;
+    font-size: 2vh;    
 }
 
-.btn-dark-color-outline:hover{
 
-    background-color: #09A6A3;
-    color: white;
-    border: 1px solid var(--dark-color);
-}*/

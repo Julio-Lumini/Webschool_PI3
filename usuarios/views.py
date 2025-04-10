@@ -48,8 +48,18 @@ def cadastro(request):
                 else:
                     messages.add_message(request, constants.ERROR, 'Erro ao associar perfil de professor')
                     return redirect('/usuarios/cadastro')
-            # Membro da secretaria não precisa de model adicional
             return redirect('/usuarios/login')
+        
+        if perfil == "secretaria":
+                if hasattr(Cadastro_Secretaria, 'user'):
+                    Cadastro_Secretaria.objects.create(user=user)
+                else:
+                    messages.add_message(request, constants.ERROR, 'Erro ao associar perfil de secretaria')
+                    return redirect('/usuarios/cadastro')
+        return redirect('/usuarios/login')
+        
+        
+        
     
 def login_view(request):
     if request.method == 'GET':

@@ -1,7 +1,7 @@
 import pandas as pd
 from django.shortcuts import render, redirect
-from .forms import MaterialForm, MerendaForm
-from .models import Merenda
+from .forms import MaterialForm, MerendaForm, CategoriaForm
+from .models import Merenda, Categoria
 from django.http import HttpResponse
 import matplotlib.pyplot as plt
 from io import BytesIO
@@ -12,6 +12,17 @@ import base64
 # Create your views here.
 def administrativo_home(request):
     return render(request, 'administrativo_home.html')
+
+def cadastro_categoria(request):
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('administrativo_home')
+    else:
+            form = CategoriaForm()
+    return render(request, 'cadastro_categoria.html', {'form': form})
+        
 
 def cadastro_materiais(request):
     if request.method == 'POST':

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'administrativo/css/administrativo.css' %}">
+    
+{% endblock 'head' %}
+
+{% block 'body' %}
+    {% include "partials/navbar.html" %}
+
+<div class="container">
+    <br>
+    <div class='row'>   
+        <div class="col-md-8">
+
+            <p class="p-bold"><span class='color-dark'></span></p>
+            <p class="p-bold">Cadastre as Categorias de Produtos</p>
+
+            <form method="post">{% csrf_token %}
+                {{ form.as_p }}
+        
+             </form>
+        </div>    
+    </div>
+</div>
+        
+    <button class="btn btn-success btn-dark-color2" type="submit">Salvar</button>
+    
+        <a href="{% url 'administrativo_home' %}"><button class="btn btn-success btn-dark-color2" type="button">Voltar</button></a>
+
+
+{%endblock%}

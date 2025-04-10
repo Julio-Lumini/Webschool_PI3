@@ -3,23 +3,29 @@
 
 {% block 'head' %}
 
-    <link rel="stylesheet" href="{% static 'secretaria/css/secretaria.css' %}">    
-    <link rel="stylesheet" href="{% static 'professor/css/professor.css' %}">
-    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
-    
+ <link rel="stylesheet" href="{% static 'administrativo/css/administrativo.css' %}">
+
+
     {% endblock 'head' %}
 
     {% block 'body' %}
     {% include "partials/navbar.html" %}
 
     <h1>Cadastro de Materiais</h1>
-
-    <form method="post">
-        {% csrf_token %}
+    <br>
+     
+</div>
+<div class="row">
+    <div class="col-md-6">    
+     <form method="post">{% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Salvar</button>
-    </form>
-    <a href="{% url 'administrativo_home' %}">Voltar</a>
+
+     </form>
+    </div> 
+</div> 
+        <button class="btn btn-success btn-dark-color2" type="submit">Salvar</button>
+    
+        <a href="{% url 'administrativo_home' %}"><button class="btn btn-success btn-dark-color2" type="button">Voltar</button></a>
 
     
 
